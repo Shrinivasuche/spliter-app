@@ -36,7 +36,7 @@ export function useStoreUser() {
       //const id = await storeUser();
       
       //remove the below lines and keep only the above line after debugging
-      console.log("clerk user object: ", user);
+      //console.log("clerk user object: ", user);
       const id = await storeUser({
         name: user.fullName ?? "Unknown",
         email: user.emailAddresses[0]?.emailAddress ?? "noemail@none.com", // ensure it's not undefined

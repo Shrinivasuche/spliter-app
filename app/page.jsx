@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div>subscribe
+    <div className="pt-16">subscribe
       <br/>
       <Button variant={'destructive'}>subscribe</Button>
     </div>
