@@ -6,7 +6,18 @@ import { api } from "../convex/_generated/api";
 
 export function useStoreUser() {
   const { isLoading, isAuthenticated } = useConvexAuth();
-  const { user } = useUser();
+  const { user , isLoaded } = useUser();
+
+  useEffect(() => {
+    if (isLoaded && user) {
+      console.log("User is loaded:", user);
+      // Safe to call storeUser() here
+    }
+  }, [isLoaded, user]);
+
+  //remove this part after debugging or rollback directly
+
+  
   // When this state is set we know the server
   // has stored the user.
   const [userId, setUserId] = useState(null);
@@ -22,7 +33,17 @@ export function useStoreUser() {
     // Recall that `storeUser` gets the user information via the `auth`
     // object on the server. You don't need to pass anything manually here.
     async function createUser() {
-      const id = await storeUser();
+      //const id = await storeUser();
+      
+      //remove the below lines and keep only the above line after debugging
+      console.log("clerk user object: ", user);
+      const id = await storeUser({
+        name: user.fullName ?? "Unknown",
+        email: user.emailAddresses[0]?.emailAddress ?? "noemail@none.com", // ensure it's not undefined
+        tokenIdentifier: user.id,
+        imageUrl: user.profileImageUrl || undefined, // avoid `null`
+      });
+
       setUserId(id);
     }
     createUser();
